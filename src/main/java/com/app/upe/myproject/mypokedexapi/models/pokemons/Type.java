@@ -1,4 +1,4 @@
-package com.app.upe.myproject.mypokedexapi.models;
+package com.app.upe.myproject.mypokedexapi.models.pokemons;
 
 public class Type {
   private String name;

@@ -1,4 +1,4 @@
-package com.app.upe.myproject.mypokedexapi.controllers;
+package com.app.upe.myproject.mypokedexapi.controllers.pokemons;
 
 import java.io.IOException;
 
@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.app.upe.myproject.mypokedexapi.models.Pokemon;
+import com.app.upe.myproject.mypokedexapi.models.pokemons.Pokemon;
 import com.google.gson.Gson;
 
 import okhttp3.OkHttpClient;
@@ -21,8 +21,8 @@ public class PokemonController extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
     OkHttpClient client = new OkHttpClient();
-
     res.setContentType("application/json;charset=utf-8");
+
     String id = req.getParameter("id");
     String uri = "https://pokeapi.co/api/v2/pokemon/" + id;
     
