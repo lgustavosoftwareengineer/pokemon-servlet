@@ -24,10 +24,10 @@ public class AuthController extends HttpServlet {
 
     userRepository.add(user);
     
-    String jsonUsers = json.toJson(userRepository.getAll());
+    String jsonUser = json.toJson(user);
 
     System.out.println("------------------------------------------------");
-    System.out.println(jsonUsers);
+    System.out.println(jsonUser);
     System.out.println("------------------------------------------------");
     
     res.sendError(StatusCodeEnum.CREATED.getValue(), "User registered with success!");

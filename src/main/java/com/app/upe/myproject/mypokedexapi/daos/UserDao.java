@@ -1,24 +1,44 @@
 package com.app.upe.myproject.mypokedexapi.daos;
 
 import java.util.ArrayList;
+import java.sql.*;
 
 import com.app.upe.myproject.mypokedexapi.models.auth.User;
+import com.app.upe.myproject.mypokedexapi.database.*;
 
 public class UserDAO extends DAO<User> {
+  private Connection connection;
   private static ArrayList<User> users = new ArrayList<User>();
+
+  public UserDAO() {
+    try {
+      this.connection = new ConnectionFactory().getConnection();
+    } catch (Exception e) {
+    }
+    
+  }
 
   @Override
   public void add(User element) {
-    if (users.isEmpty()) {
-      users.add(element);
-    } 
-    for (User user : users) {
-      if (user.getEmail().equals(element.getEmail())) {
-       return;
-      } 
-    }
+    String SQL = "INSERT into users " + "(id, "+ "username, " + "password, " + "email) " + "values(?, ?, ?, ?)";
 
-    users.add(element);
+  try {
+    // prepared statement para inserção
+    PreparedStatement stmt = connection.prepareStatement(SQL); 
+
+    // seta os valores
+    stmt.setString(1,element.getId());
+    stmt.setString(2,element.getUsername());
+    stmt.setString(3,element.getPassword());
+    stmt.setString(4,element.getEmail());
+
+    // executa
+    stmt.execute();
+    stmt.close();
+  } catch (SQLException e) {
+    throw new RuntimeException(e);
+  }
+  
   }
 
   @Override
