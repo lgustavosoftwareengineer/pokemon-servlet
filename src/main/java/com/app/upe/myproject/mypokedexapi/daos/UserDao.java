@@ -20,25 +20,18 @@ public class UserDAO extends DAO<User> {
 
   @Override
   public void add(User element) {
-    String SQL = "INSERT into users " + "(id, "+ "username, " + "password, " + "email) " + "values(?, ?, ?, ?)";
+    String SQL = "INSERT INTO users " + "(id, "+ "username, " + "password, " + "email) " + "VALUES (?, ?, ?, ?)";
 
-  try {
-    // prepared statement para inserção
-    PreparedStatement stmt = connection.prepareStatement(SQL); 
+    try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
+      stmt.setString(1, element.getId());
+      stmt.setString(2, element.getUsername());
+      stmt.setString(3, element.getPassword());
+      stmt.setString(4, element.getEmail());
 
-    // seta os valores
-    stmt.setString(1,element.getId());
-    stmt.setString(2,element.getUsername());
-    stmt.setString(3,element.getPassword());
-    stmt.setString(4,element.getEmail());
-
-    // executa
-    stmt.execute();
-    stmt.close();
-  } catch (SQLException e) {
-    throw new RuntimeException(e);
-  }
-  
+      stmt.execute();
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @Override
