@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.app.upe.myproject.mypokedexapi.daos.UserDAO;
 import com.app.upe.myproject.mypokedexapi.models.auth.User;
+import com.app.upe.myproject.mypokedexapi.utils.EncryptPassword;
 
 public class UserRepository extends Repository<User> {
   UserDAO userDAO = new UserDAO();
@@ -13,6 +14,9 @@ public class UserRepository extends Repository<User> {
     if (!entity.getPassword().equals(entity.getConfirmPassword())) {
       throw new Exception("The password and confirmPassword must be equals.");
     } else {
+      String encryptedPassword = EncryptPassword.generateSecurePassword(entity.getPassword());
+      entity.setPassword(encryptedPassword);
+
       userDAO.add(entity);
     }
   }
