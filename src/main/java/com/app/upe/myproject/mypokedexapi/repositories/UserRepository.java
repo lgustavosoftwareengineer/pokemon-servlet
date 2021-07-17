@@ -2,89 +2,39 @@ package com.app.upe.myproject.mypokedexapi.repositories;
 
 import java.util.ArrayList;
 
+import com.app.upe.myproject.mypokedexapi.daos.UserDao;
 import com.app.upe.myproject.mypokedexapi.models.auth.User;
 
 public class UserRepository extends Repository<User> {
-  private static ArrayList<User> users = new ArrayList<User>();
+  UserDao userDao = new UserDao();
 
   @Override
   public void add(User element) {
-    if (users.isEmpty()) {
-      users.add(element);
-    } 
-    for (User user : users) {
-      if (user.getEmail().equals(element.getEmail())) {
-       return;
-      } 
-    }
-
-    users.add(element);
+    userDao.add(element);
   }
 
   @Override
   public User find(String searchParam) {
-    if (users.isEmpty()) {
-      return null;
-    }
-
-    for (User user : users) {
-      if (user.getEmail().equals(searchParam) || user.getId().equals(searchParam) || user.getUsername().equals(searchParam)) {
-        return user;
-      } 
-      else {
-        return null;
-      }
-    }
-
-    return null;
+    return userDao.find(searchParam);
   }
 
   @Override
   public User findById(String id) {
-    for (User user : users) {
-      if (user.getId().equals(id)) {
-        return user;
-      } 
-    }
-    return null;
+    return userDao.find(id); 
   }
 
   @Override
   public void update(String id, User element) {
-    User user = this.findById(id);
-
-    if (user != null) {
-      if (element.getEmail() != null) {
-        user.setEmail(element.getEmail());
-      }
-      if (element.getUsername() != null) {
-        user.setUsername(element.getUsername());
-      }
-      if (element.getPassword() != null) {
-        user.setPassword(element.getPassword());
-      }
-
-      this.delete(id);
-      this.add(user);
-    }
-    
   }
 
   @Override
   public User delete(String id) {
-    User user = this.findById(id);
-
-    if (user != null) {
-      users.remove(user);
-      return user;
-    }
-
-    return null;
+   return userDao.delete(id);
   }
 
   @Override
   public ArrayList<User> getAll() {
-    return users;
+   return userDao.getAll();
   }
   
 }
