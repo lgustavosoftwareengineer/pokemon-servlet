@@ -7,6 +7,7 @@ import javax.servlet.http.*;
 
 import com.app.upe.myproject.mypokedexapi.models.auth.User;
 import com.app.upe.myproject.mypokedexapi.repositories.UserRepository;
+import com.app.upe.myproject.mypokedexapi.utils.StatusCodeEnum;
 import com.google.gson.Gson;
 
 import java.util.stream.Collectors;
@@ -20,6 +21,7 @@ public class AuthController extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
     String reqBody = req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
     User user = json.fromJson(reqBody, User.class);
+
     userRepository.add(user);
     
     String jsonUsers = json.toJson(userRepository.getAll());
@@ -28,9 +30,7 @@ public class AuthController extends HttpServlet {
     System.out.println(jsonUsers);
     System.out.println("------------------------------------------------");
     
-    res.sendError(201, "User registered with success!");
-
-
+    res.sendError(StatusCodeEnum.CREATED.getValue(), "User registered with success!");
   }
 
   @Override
@@ -40,9 +40,9 @@ public class AuthController extends HttpServlet {
     User foundUser = userRepository.find(user.getEmail());
     
     if (foundUser != null) {
-      res.sendError(201, "User logged with success!!");
+      res.sendError(StatusCodeEnum.ACCEPTED.getValue(), "User logged with success!!");
     } else {
-      res.sendError(404, "Please check the email and password and try again");
+      res.sendError(StatusCodeEnum.UNAUTHORIZED.getValue(), "Please check the email and password and try again");
     }
 
   }
