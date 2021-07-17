@@ -2,25 +2,25 @@ package com.app.upe.myproject.mypokedexapi.repositories;
 
 import java.util.ArrayList;
 
-import com.app.upe.myproject.mypokedexapi.daos.UserDao;
+import com.app.upe.myproject.mypokedexapi.daos.UserDAO;
 import com.app.upe.myproject.mypokedexapi.models.auth.User;
 
 public class UserRepository extends Repository<User> {
-  UserDao userDao = new UserDao();
+  UserDAO userDAO = new UserDAO();
 
   @Override
   public void add(User element) {
-    userDao.add(element);
+    userDAO.add(element);
   }
 
   @Override
   public User find(String searchParam) {
-    return userDao.find(searchParam);
+    return userDAO.find(searchParam);
   }
 
   @Override
   public User findById(String id) {
-    return userDao.find(id); 
+    return userDAO.find(id); 
   }
 
   @Override
@@ -29,12 +29,12 @@ public class UserRepository extends Repository<User> {
 
   @Override
   public User delete(String id) {
-   return userDao.delete(id);
+   return userDAO.delete(id);
   }
 
   @Override
   public ArrayList<User> getAll() {
-   return userDao.getAll();
+   return userDAO.getAll();
   }
   
 }

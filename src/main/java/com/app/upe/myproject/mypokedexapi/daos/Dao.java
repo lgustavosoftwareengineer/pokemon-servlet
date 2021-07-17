@@ -2,7 +2,7 @@ package com.app.upe.myproject.mypokedexapi.daos;
 
 import java.util.ArrayList;
 
-public abstract class Dao<T> {
+public abstract class DAO<T> {
   public abstract void add(T element);
   
   public abstract T find(String searchParam);

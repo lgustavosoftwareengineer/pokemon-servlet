@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.app.upe.myproject.mypokedexapi.models.auth.User;
 
-public class UserDao extends Dao<User> {
+public class UserDAO extends DAO<User> {
   private static ArrayList<User> users = new ArrayList<User>();
 
   @Override
