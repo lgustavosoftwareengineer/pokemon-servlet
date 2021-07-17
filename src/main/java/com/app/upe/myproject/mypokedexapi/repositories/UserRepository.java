@@ -9,8 +9,12 @@ public class UserRepository extends Repository<User> {
   UserDAO userDAO = new UserDAO();
 
   @Override
-  public void add(User element) {
-    userDAO.add(element);
+  public void add(User entity) throws Exception {
+    if (!entity.getPassword().equals(entity.getConfirmPassword())) {
+      throw new Exception("The password and confirmPassword must be equals.");
+    } else {
+      userDAO.add(entity);
+    }
   }
 
   @Override
@@ -24,7 +28,7 @@ public class UserRepository extends Repository<User> {
   }
 
   @Override
-  public void update(String id, User element) {
+  public void update(String id, User entity) {
   }
 
   @Override

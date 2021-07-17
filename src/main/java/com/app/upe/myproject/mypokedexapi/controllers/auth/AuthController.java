@@ -21,16 +21,12 @@ public class AuthController extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
     String reqBody = req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
     User user = json.fromJson(reqBody, User.class);
-
-    userRepository.add(user);
-    
-    String jsonUser = json.toJson(user);
-
-    System.out.println("------------------------------------------------");
-    System.out.println(jsonUser);
-    System.out.println("------------------------------------------------");
-    
-    res.sendError(StatusCodeEnum.CREATED.getValue(), "User registered with success!");
+    try {
+      userRepository.add(user);
+      res.sendError(StatusCodeEnum.CREATED.getValue(), "User registered with success!");
+    } catch (Exception e) {
+      res.sendError(StatusCodeEnum.BAD_REQUEST.getValue(), e.getMessage());
+    }
   }
 
   @Override
