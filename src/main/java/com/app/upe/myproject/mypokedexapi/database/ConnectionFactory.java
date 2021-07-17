@@ -2,13 +2,17 @@ package com.app.upe.myproject.mypokedexapi.database;
 
 import java.sql.*;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 public class ConnectionFactory {
   String DB_DRIVER = "org.postgresql.Driver";
-  String DATABASE_NAME = "pokedex";
-  String USER_NAME = "postgres";
-  String USER_PASSWORD = "Pokemon123!";
-
+  Dotenv dotenv = Dotenv.load();
+  
   public Connection getConnection() throws ClassNotFoundException {
+    String DATABASE_NAME = dotenv.get("DATABASE_NAME");
+    String USER_NAME = dotenv.get("USER_NAME");
+    String USER_PASSWORD = dotenv.get("USER_PASSWORD");
+
     try {
       Class.forName(DB_DRIVER);
       System.out.println("----------------------------------------");
