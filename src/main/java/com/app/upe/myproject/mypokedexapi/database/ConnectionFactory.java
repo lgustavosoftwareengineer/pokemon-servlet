@@ -12,9 +12,8 @@ public class ConnectionFactory {
         System.out.println("----------------------------------------");
         System.out.println("Got Connection");
         System.out.println("----------------------------------------");
-        
-        return DriverManager.getConnection(
-        "jdbc:postgresql:pokedex", "postgres", "Pokemon123!");
+
+        return DriverManager.getConnection("jdbc:postgresql:pokedex", "postgres", "Pokemon123!");
       } catch (SQLException e) {
           throw new RuntimeException(e);
       }
