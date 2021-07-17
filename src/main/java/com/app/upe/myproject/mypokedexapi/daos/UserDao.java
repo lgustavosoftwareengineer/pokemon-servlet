@@ -14,6 +14,7 @@ public class UserDAO extends DAO<User> {
     try {
       this.connection = new ConnectionFactory().getConnection();
     } catch (Exception e) {
+      throw new RuntimeException(e);
     }
     
   }
