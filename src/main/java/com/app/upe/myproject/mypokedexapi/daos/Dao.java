@@ -9,7 +9,7 @@ public abstract class DAO<T> {
 
   public abstract void update(String id, T element);
 
-  public abstract T delete(String id);
+  public abstract void delete(String id);
 
   public abstract ArrayList<T> getAll();
 }

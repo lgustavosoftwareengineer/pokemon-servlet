@@ -13,7 +13,6 @@ public class UserRepository extends Repository<User> {
   public void add(User entity) throws Exception {
     if (!entity.getPassword().equals(entity.getConfirmPassword())) {
       throw new Exception("The password and confirmPassword must be equals.");
-
     } else {
       User user = this.find(entity.getEmail());
       
@@ -23,7 +22,6 @@ public class UserRepository extends Repository<User> {
   
         userDAO.add(entity);
       }
-
       else {
         throw new Exception("A user with this email already exist.");
       }
@@ -43,16 +41,41 @@ public class UserRepository extends Repository<User> {
 
   @Override
   public User findById(String id) {
-    return userDAO.find(id); 
+    User user = this.find(id); 
+   
+    return user;
   }
 
   @Override
   public void update(String id, User entity) {
+    User user = this.findById(id);
+
+    if (user == null) {
+      throw new RuntimeException("Can't find a user with this id.");
+    } else {
+      if (entity.getEmail() != null) {
+        user.setEmail(entity.getEmail());
+      }
+      if (entity.getUsername() != null) {
+        user.setUsername(entity.getUsername());
+      }
+      if (entity.getPassword() != null) {
+        user.setPassword(entity.getPassword());
+      } 
+      userDAO.update(id, user);
+    }
   }
 
   @Override
   public User delete(String id) {
-   return userDAO.delete(id);
+    User user = this.findById(id);
+
+    if (user == null) {
+      throw new RuntimeException("Can't find a user with this id.");
+    } else {
+      userDAO.delete(id);
+      return user;
+    }
   }
 
   @Override

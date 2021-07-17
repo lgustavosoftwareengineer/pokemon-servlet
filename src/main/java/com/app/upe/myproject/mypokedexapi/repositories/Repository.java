@@ -9,7 +9,7 @@ public abstract class Repository<T> {
 
   public abstract T findById(String id);
 
-  public abstract void update(String id, T element);
+  public abstract void update(String id, T entity);
 
   public abstract T delete(String id);
 

@@ -8,7 +8,6 @@ import com.app.upe.myproject.mypokedexapi.database.*;
 
 public class UserDAO extends DAO<User> {
   private Connection connection;
-  private static ArrayList<User> users = new ArrayList<User>();
 
   public UserDAO() {
     try {
@@ -39,6 +38,7 @@ public class UserDAO extends DAO<User> {
   public User find(String searchParam) {
     String formattedSearchParam = "\'"+searchParam+"\'";
     String SQL = "SELECT * FROM users WHERE email = " + formattedSearchParam + "OR id = " + formattedSearchParam + "OR username = " + formattedSearchParam;
+    
     try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
       ResultSet rs = stmt.executeQuery();
       User user = new User();
@@ -51,48 +51,59 @@ public class UserDAO extends DAO<User> {
       }
       
       return user;
-    
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
   }
 
   @Override
-  public void update(String id, User element) {
-    User user = this.find(id);
+  public void update(String id, User entity) {
+    String SQL = "UPDATE users SET username=?, email=?, password=? WHERE id=?";
 
-    if (user != null) {
-      if (element.getEmail() != null) {
-        user.setEmail(element.getEmail());
-      }
-      if (element.getUsername() != null) {
-        user.setUsername(element.getUsername());
-      }
-      if (element.getPassword() != null) {
-        user.setPassword(element.getPassword());
-      }
-
-      this.delete(id);
-      this.add(user);
+    try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
+      stmt.setString(1, entity.getUsername());
+      stmt.setString(2, entity.getEmail());
+      stmt.setString(3, entity.getPassword());
+      stmt.setString(4, id);
+      stmt.execute();
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
     }
-    
   }
 
   @Override
-  public User delete(String id) {
-    User user = this.find(id);
-
-    if (user != null) {
-      users.remove(user);
-      return user;
+  public void delete(String id) {
+    String SQL = "DELETE FROM users WHERE " + "id = " + "\'"+id+"\'";
+    
+    try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
+      stmt.execute();      
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
     }
 
-    return null;
   }
 
   @Override
   public ArrayList<User> getAll() {
-    return users;
+    String SQL = "SELECT * FROM users";
+    
+    try (PreparedStatement stmt = this.connection.prepareStatement(SQL)){
+      ArrayList<User> users = new ArrayList<User>();
+      ResultSet rs = stmt.executeQuery();
+
+      while (rs.next()) {
+        User user = new User();
+        user.setId(rs.getString("id"));
+        user.setUsername(rs.getString("userName"));
+        user.setEmail(rs.getString("email"));
+        user.setPassword(rs.getString("setPassword"));
+        users.add(user);
+      }
+
+      return users;
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
   }
   
 }

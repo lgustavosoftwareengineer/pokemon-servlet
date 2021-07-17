@@ -25,7 +25,7 @@ public class LoginController extends HttpServlet {
     String reqBody = req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
     User userFromJson = json.fromJson(reqBody, User.class);
     User user = userRepository.find(userFromJson.getEmail());
-    String ERROR_STRING = "Please check the email and password and try again";
+    String ERROR_STRING = "Please check the email and password and try again.";
 
     if (user == null) {
       res.sendError(StatusCodeEnum.BAD_REQUEST.getValue(),ERROR_STRING);
@@ -37,7 +37,7 @@ public class LoginController extends HttpServlet {
         res.sendError(StatusCodeEnum.BAD_REQUEST.getValue(),ERROR_STRING);
       }
       else {
-        res.sendError(StatusCodeEnum.OK.getValue(), "User logged with success");
+        res.sendError(StatusCodeEnum.OK.getValue(), "User logged with success.");
       }
     }
    

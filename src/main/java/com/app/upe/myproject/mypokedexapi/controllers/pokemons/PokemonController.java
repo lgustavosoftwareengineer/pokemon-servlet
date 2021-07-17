@@ -16,7 +16,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-@WebServlet("/v1/pokemon")
+@WebServlet("/v1/pokemons")
 public class PokemonController extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

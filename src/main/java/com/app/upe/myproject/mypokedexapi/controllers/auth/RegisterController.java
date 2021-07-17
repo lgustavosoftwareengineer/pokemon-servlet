@@ -24,7 +24,7 @@ public class RegisterController extends HttpServlet {
     
     try {
       userRepository.add(user);
-      res.sendError(StatusCodeEnum.CREATED.getValue(), "User registered with success!");
+      res.sendError(StatusCodeEnum.CREATED.getValue(), "User registered with success.");
     } catch (Exception e) {
       res.sendError(StatusCodeEnum.BAD_REQUEST.getValue(), e.getMessage());
     }
