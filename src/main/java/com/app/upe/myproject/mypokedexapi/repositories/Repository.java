@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public abstract class Repository<T> {
   public abstract void add(T element) throws Exception;
   
-  public abstract T find(String searchParam);
+  public abstract T find(String searchParam) throws Exception;
 
   public abstract T findById(String id);
 

@@ -20,14 +20,14 @@ public class UserDAO extends DAO<User> {
   }
 
   @Override
-  public void add(User element) {
-    String SQL = "INSERT INTO users " + "(id, "+ "username, " + "password, " + "email) " + "VALUES (?, ?, ?, ?)";
+  public void add(User entity) {
+    String SQL = "INSERT INTO users (id, username, password, email) VALUES (?, ?, ?, ?)";
 
     try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
-      stmt.setString(1, element.getId());
-      stmt.setString(2, element.getUsername());
-      stmt.setString(3, element.getPassword());
-      stmt.setString(4, element.getEmail());
+      stmt.setString(1, entity.getId());
+      stmt.setString(2, entity.getUsername());
+      stmt.setString(3, entity.getPassword());
+      stmt.setString(4, entity.getEmail());
 
       stmt.execute();
     } catch (SQLException e) {
@@ -37,20 +37,24 @@ public class UserDAO extends DAO<User> {
 
   @Override
   public User find(String searchParam) {
-    if (users.isEmpty()) {
-      return null;
-    }
+    String formattedSearchParam = "\'"+searchParam+"\'";
+    String SQL = "SELECT * FROM users WHERE email = " + formattedSearchParam + "OR id = " + formattedSearchParam + "OR username = " + formattedSearchParam;
+    try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
+      ResultSet rs = stmt.executeQuery();
+      User user = new User();
 
-    for (User user : users) {
-      if (user.getEmail().equals(searchParam) || user.getId().equals(searchParam) || user.getUsername().equals(searchParam) || user.getId().equals(searchParam)) {
-        return user;
-      } 
-      else {
-        return null;
+      while (rs.next()) {
+        user.setId(rs.getString("id"));
+        user.setUsername(rs.getString("username"));
+        user.setPassword(rs.getString("password"));;
+        user.setEmail(rs.getString("email"));
       }
+      
+      return user;
+    
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
     }
-
-    return null;
   }
 
   @Override

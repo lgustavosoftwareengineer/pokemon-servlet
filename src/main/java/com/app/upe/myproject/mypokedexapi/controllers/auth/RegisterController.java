@@ -12,8 +12,8 @@ import com.google.gson.Gson;
 
 import java.util.stream.Collectors;
 
-@WebServlet("/v1/auth")
-public class AuthController extends HttpServlet {
+@WebServlet("/v1/auth/register")
+public class RegisterController extends HttpServlet {
   UserRepository userRepository = new UserRepository();
   Gson json = new Gson();
   
@@ -21,6 +21,7 @@ public class AuthController extends HttpServlet {
   protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
     String reqBody = req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
     User user = json.fromJson(reqBody, User.class);
+    
     try {
       userRepository.add(user);
       res.sendError(StatusCodeEnum.CREATED.getValue(), "User registered with success!");
@@ -29,17 +30,4 @@ public class AuthController extends HttpServlet {
     }
   }
 
-  @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-    String reqBody = req.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-    User user = json.fromJson(reqBody, User.class);
-    User foundUser = userRepository.find(user.getEmail());
-    
-    if (foundUser != null) {
-      res.sendError(StatusCodeEnum.ACCEPTED.getValue(), "User logged with success!!");
-    } else {
-      res.sendError(StatusCodeEnum.UNAUTHORIZED.getValue(), "Please check the email and password and try again");
-    }
-
-  }
 }
