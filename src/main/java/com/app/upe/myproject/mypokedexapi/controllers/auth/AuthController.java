@@ -6,7 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 import com.app.upe.myproject.mypokedexapi.models.auth.User;
-import com.app.upe.myproject.mypokedexapi.repository.UserRepository;
+import com.app.upe.myproject.mypokedexapi.repositories.UserRepository;
 import com.google.gson.Gson;
 
 import java.util.stream.Collectors;
