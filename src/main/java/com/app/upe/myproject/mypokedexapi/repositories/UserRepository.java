@@ -42,7 +42,9 @@ public class UserRepository extends Repository<User> {
   @Override
   public User findById(String id) {
     User user = this.find(id); 
-   
+    if (user == null) {
+      throw new RuntimeException("Can't find a user with this id.");
+    }
     return user;
   }
 
