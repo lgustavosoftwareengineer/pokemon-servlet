@@ -15,7 +15,7 @@ import com.app.upe.myproject.mypokedexapi.utils.StatusCodeEnum;
 import com.google.gson.Gson;
 
 
-@WebServlet("/v1/users-details")
+@WebServlet("/v1/users")
 public class UserDetailsController extends HttpServlet {
   UserRepository userRepository = new UserRepository();
   Gson json = new Gson();
