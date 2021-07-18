@@ -98,6 +98,12 @@ Endpoint (GET): ``
 
 >
 
+### 🏗️ Delete a pokemon
+
+Endpoint (DELETE): ``
+
+>
+
 ### **🏗️ Get all pokemons from wildland**
 
 Endpoint (GET): ``
@@ -107,12 +113,6 @@ Endpoint (GET): ``
 ### **🏗️ Search a pokemon from wildland**
 
 Endpoint (GET): ``
-
->
-
-### 🏗️ Delete a pokemon
-
-Endpoint (DELETE): ``
 
 >
 
