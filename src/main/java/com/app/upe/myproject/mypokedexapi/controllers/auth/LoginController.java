@@ -43,7 +43,7 @@ public class LoginController extends HttpServlet {
         userInfos.put("userId", user.getId());
         
         try {
-          String jwtToken = "Bearer " + JWTTokenService.buildJWTToken(userInfos);
+          String jwtToken = JWTTokenService.buildJWTToken(userInfos);
           res.sendError(BuildStatusCode.OK.getValue(), jwtToken);
         } catch (Exception e) {
           res.sendError(BuildStatusCode.BAD_REQUEST.getValue(), e.getMessage());
