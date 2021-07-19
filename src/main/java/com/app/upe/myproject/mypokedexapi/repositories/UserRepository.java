@@ -10,9 +10,9 @@ public class UserRepository extends Repository<User> {
   UserDAO userDAO = new UserDAO();
 
   @Override
-  public void add(User entity) throws Exception {
+  public void add(User entity) {
     if (!entity.getPassword().equals(entity.getConfirmPassword())) {
-      throw new Exception("The password and confirmPassword must be equals.");
+      throw new RuntimeException("The password and confirmPassword must be equals.");
     } else {
       User user = this.find(entity.getEmail());
       
@@ -23,7 +23,7 @@ public class UserRepository extends Repository<User> {
         userDAO.add(entity);
       }
       else {
-        throw new Exception("A user with this email already exist.");
+        throw new RuntimeException("A user with this email already exist.");
       }
      
     }
