@@ -37,7 +37,6 @@ public class UserDAO extends DAO<User> {
   @Override
   public User find(String searchParam) {
     String formattedSearchParam = "\'"+searchParam+"\'";
-    
     String SQL = "SELECT * FROM users WHERE email = " + formattedSearchParam + "OR id = " + formattedSearchParam + "OR username = " + formattedSearchParam;
     
     try (PreparedStatement stmt = connection.prepareStatement(SQL)) {
