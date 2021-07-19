@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.app.upe.myproject.mypokedexapi.models.auth.User;
 import com.app.upe.myproject.mypokedexapi.repositories.UserRepository;
-import com.app.upe.myproject.mypokedexapi.utils.EncryptPassword;
-import com.app.upe.myproject.mypokedexapi.utils.JWTToken;
-import com.app.upe.myproject.mypokedexapi.utils.StatusCodeEnum;
+import com.app.upe.myproject.mypokedexapi.services.EncryptPasswordService;
+import com.app.upe.myproject.mypokedexapi.services.JWTTokenService;
+import com.app.upe.myproject.mypokedexapi.utils.BuildStatusCode;
 import com.google.gson.Gson;
 
 @WebServlet("/v1/auth/login")
@@ -29,28 +29,25 @@ public class LoginController extends HttpServlet {
     User userFromJson = json.fromJson(reqBody, User.class);
     User user = userRepository.find(userFromJson.getEmail());
     String ERROR_STRING = "Please check the email and password and try again.";
-
+    
     if (user == null) {
-      res.sendError(StatusCodeEnum.BAD_REQUEST.getValue(),ERROR_STRING);
-
+      res.sendError(BuildStatusCode.BAD_REQUEST.getValue(),ERROR_STRING);
     } 
     else {
-      boolean isPasswordsEquals = EncryptPassword.verifyPasswords(userFromJson.getPassword(), user.getPassword());
-
+      boolean isPasswordsEquals = EncryptPasswordService.verifyPasswords(userFromJson.getPassword(), user.getPassword());
       if (!isPasswordsEquals) {
-        res.sendError(StatusCodeEnum.BAD_REQUEST.getValue(),ERROR_STRING);
+        res.sendError(BuildStatusCode.BAD_REQUEST.getValue(),ERROR_STRING);
       }
       else {
         Map<String, String> userInfos = new HashMap<String, String>();
         userInfos.put("userId", user.getId());
         
         try {
-          String jwtToken = "Bearer " + JWTToken.buildJWTToken(userInfos);
-          res.sendError(StatusCodeEnum.OK.getValue(), jwtToken);
+          String jwtToken = "Bearer " + JWTTokenService.buildJWTToken(userInfos);
+          res.sendError(BuildStatusCode.OK.getValue(), jwtToken);
         } catch (Exception e) {
-          res.sendError(StatusCodeEnum.BAD_REQUEST.getValue(), e.getMessage());
+          res.sendError(BuildStatusCode.BAD_REQUEST.getValue(), e.getMessage());
         }
-
       }
     }
    

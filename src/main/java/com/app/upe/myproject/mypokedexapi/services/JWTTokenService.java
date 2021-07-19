@@ -1,17 +1,15 @@
-package com.app.upe.myproject.mypokedexapi.utils;
+package com.app.upe.myproject.mypokedexapi.services;
 
-import java.util.Date;
-import java.util.Map;
+import java.util.*;
 
+import com.app.upe.myproject.mypokedexapi.utils.Formatter;
 import com.auth0.jwt.*;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTCreationException;
-import com.auth0.jwt.exceptions.JWTDecodeException;
-import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.*;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
-public class JWTToken {
+public class JWTTokenService {
   static Dotenv dotenv = Dotenv.load();
   static String SECRET = dotenv.get("JWT-SECRET");
   static String ISSUER = dotenv.get("JWT-ISSUER");
@@ -58,9 +56,9 @@ public class JWTToken {
       Algorithm algorithm = Algorithm.HMAC256(SECRET);
       JWTVerifier verifier = JWT.require(algorithm).withIssuer(ISSUER).build();
       
-      verifier.verify(token).toString();
+      verifier.verify(token);
     } catch (JWTVerificationException exception){
-      throw new JWTDecodeException(exception.getMessage());
+      throw new JWTDecodeException("Invalid token");
     }
   }
 

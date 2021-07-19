@@ -2,6 +2,9 @@ package com.app.upe.myproject.mypokedexapi.models.auth;
 
 import java.util.*;
 
+import com.app.upe.myproject.mypokedexapi.services.JWTTokenService;
+import com.app.upe.myproject.mypokedexapi.utils.Formatter;
+
 public class User {
   private String id = UUID.randomUUID().toString();
   private String username;
@@ -44,6 +47,15 @@ public class User {
 
   public void setId(String id) {
     this.id = id;
+  }
+
+  public static String getIdFromBearerToken(String bearerToken) {
+    Map<String, String> payload = Formatter.convertFromStringToMap(JWTTokenService.decryptJWTToken(bearerToken));
+    Collection<String> payloadValues = payload.values();
+    
+    String id = payloadValues.toArray()[1].toString().split("}")[0].replaceAll("^\"+|\"+$", "");
+
+    return id;
   }
 
 }

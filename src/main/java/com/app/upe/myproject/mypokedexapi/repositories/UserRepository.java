@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.app.upe.myproject.mypokedexapi.daos.UserDAO;
 import com.app.upe.myproject.mypokedexapi.models.auth.User;
-import com.app.upe.myproject.mypokedexapi.utils.EncryptPassword;
+import com.app.upe.myproject.mypokedexapi.services.EncryptPasswordService;
 
 public class UserRepository extends Repository<User> {
   UserDAO userDAO = new UserDAO();
@@ -17,7 +17,7 @@ public class UserRepository extends Repository<User> {
       User user = this.find(entity.getEmail());
       
       if (user == null) {
-        String encryptedPassword = EncryptPassword.buildEncryptedPassword(entity.getPassword());
+        String encryptedPassword = EncryptPasswordService.buildEncryptedPassword(entity.getPassword());
         entity.setPassword(encryptedPassword);
   
         userDAO.add(entity);

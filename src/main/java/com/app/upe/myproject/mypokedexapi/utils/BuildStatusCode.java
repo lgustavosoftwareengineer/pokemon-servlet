@@ -1,6 +1,6 @@
 package com.app.upe.myproject.mypokedexapi.utils;
 
-public enum StatusCodeEnum {
+public enum BuildStatusCode {
   // STATUS 2XX CODES
   OK(200),
   ACCEPTED(201),
@@ -14,7 +14,7 @@ public enum StatusCodeEnum {
   
   private int value;
 
-  StatusCodeEnum(int value) {
+  BuildStatusCode(int value) {
     this.value = value;
   };
 

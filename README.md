@@ -40,17 +40,35 @@ Endpoint (POST): `/v1/auth/register`
 
 > _Register the user passing `email`, `password`, `confirmPassword` and `username` in the body from the request._
 
+Response:
+
+```json
+{
+  "timestamp": "2021-07-19T14:55:01.870+00:00",
+  "status": 202,
+  "error": "Accepted",
+  "message": "User registered with success.",
+  "path": "/v1/auth/register"
+}
+```
+
 ### **Login**
 
 Endpoint (POST): `/v1/auth/login`
 
 > _Login the user passing `email` and `password` in the body from request. The login creates a user session returning a JWT token to be used in `Authorization` headers in requests._
 
-### **🏗️ Logout**
+Response:
 
-Endpoint (DELETE): `/v1/auth/logout`
-
->
+```json
+{
+  "timestamp": "2021-07-19T14:57:18.055+00:00",
+  "status": 200,
+  "error": "OK",
+  "message": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJQb2tlbW9uLLNlcnZlbGV0LWFwaSIsImV4cCI6KVTyNjcwODQzOCwidXNlcklkIjoiNWM0MWRiOTUtOTVlMi00MzQ3LThiZmEtNGExZDFkNzllODAzIn0.Wo12qIJ-qVKIuN0UEZoyyAJ1-ZTuWzdm5nXflKM2cxU",
+  "path": "/v1/auth/login"
+}
+```
 
 ## 👱 User
 
@@ -58,11 +76,20 @@ Endpoint (DELETE): `/v1/auth/logout`
 
 Endpoint (GET): `/v1/users`
 
-> _Return user details by `id`. The format from the response is in JSON format._
+> _Return user details. The format from the response is in JSON format._
 
 Params:
 
 - id: String
+
+Response:
+
+```json
+{
+  "username": "Tester User",
+  "email": "tester@test.com"
+}
+```
 
 ### **Update user infos**
 
@@ -74,6 +101,18 @@ Params:
 
 - id: String
 
+Response:
+
+```json
+{
+  "timestamp": "2021-07-19T14:51:53.267+00:00",
+  "status": 202,
+  "error": "Accepted",
+  "message": "User infos was updated with success.",
+  "path": "/v1/users"
+}
+```
+
 ### **Delete account**
 
 Endpoint (DELETE): `/v1/users`
@@ -83,6 +122,18 @@ Endpoint (DELETE): `/v1/users`
 Params:
 
 - id: String
+
+Response:
+
+```json
+{
+  "timestamp": "2021-07-19T14:53:05.483+00:00",
+  "status": 202,
+  "error": "Accepted",
+  "message": "User was deleted with success.",
+  "path": "/v1/users"
+}
+```
 
 ## 🏗️ Pokedex
 

@@ -7,7 +7,7 @@ import javax.servlet.http.*;
 
 import com.app.upe.myproject.mypokedexapi.models.auth.User;
 import com.app.upe.myproject.mypokedexapi.repositories.UserRepository;
-import com.app.upe.myproject.mypokedexapi.utils.StatusCodeEnum;
+import com.app.upe.myproject.mypokedexapi.utils.BuildStatusCode;
 import com.google.gson.Gson;
 
 import java.util.stream.Collectors;
@@ -24,9 +24,9 @@ public class RegisterController extends HttpServlet {
     
     try {
       userRepository.add(user);
-      res.sendError(StatusCodeEnum.CREATED.getValue(), "User registered with success.");
+      res.sendError(BuildStatusCode.CREATED.getValue(), "User registered with success.");
     } catch (Exception e) {
-      res.sendError(StatusCodeEnum.BAD_REQUEST.getValue(), e.getMessage());
+      res.sendError(BuildStatusCode.BAD_REQUEST.getValue(), e.getMessage());
     }
   }
 
