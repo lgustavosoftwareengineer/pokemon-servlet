@@ -1,6 +1,8 @@
 package com.app.upe.myproject.mypokedexapi.controllers.auth;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
@@ -12,7 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.app.upe.myproject.mypokedexapi.models.auth.User;
 import com.app.upe.myproject.mypokedexapi.repositories.UserRepository;
 import com.app.upe.myproject.mypokedexapi.utils.EncryptPassword;
+import com.app.upe.myproject.mypokedexapi.utils.GenerateJWTToken;
 import com.app.upe.myproject.mypokedexapi.utils.StatusCodeEnum;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.google.gson.Gson;
 
 @WebServlet("/v1/auth/login")
@@ -37,7 +41,18 @@ public class LoginController extends HttpServlet {
         res.sendError(StatusCodeEnum.BAD_REQUEST.getValue(),ERROR_STRING);
       }
       else {
-        res.sendError(StatusCodeEnum.OK.getValue(), "User logged with success.");
+        Map<String, String> userInfos = new HashMap<String, String>();
+        userInfos.put("userId", user.getId());
+
+        String jwtToken = GenerateJWTToken.buildJWTToken(userInfos);
+
+        String decryptedJwt = GenerateJWTToken.decryptJWTToken(jwtToken);
+        
+        System.out.println("-----------------------------");
+        System.out.println(decryptedJwt);
+        System.out.println("-----------------------------");
+
+        res.sendError(StatusCodeEnum.OK.getValue(), jwtToken);
       }
     }
    
