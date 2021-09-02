@@ -24,7 +24,29 @@
 
 > 🅿️ A servlet-API system made using Java which the purpose is simulate a pokedex system from the pokemon series.
 
-#
+# Intruções para rodar o projeto
+
+- Primeiro clone o projeto
+- Depois [baixe e adicione o seguinte arquivo na raiz do projeto](https://drive.google.com/file/d/1_qRxeZb9myK3xQd8_OM6wzo9uEzzHt3A/view?usp=sharing)
+- Altere o arquivo baixado a cima de acordo com as configurações do seu banco de dados:
+  Estrutura do arquivo (`.env`):
+
+  ```
+  # Nome do banco de dados
+  DATABASE_NAME = "pokedex"
+
+  # Credenciais de acesso do banco de dados
+  USER_NAME = "postgres"
+  USER_PASSWORD = "Pokemon123!"
+
+  # Tokens necessários para utilizar o bearer token
+  # before be transformed using SHA256 algorithm was "pokemon-servelet-api"
+  JWT-SECRET = "0531cee4683f3ba20ce71cb431ab3fbc2fefe364413b43a0d94af8035a59e0ee"
+  JWT-ISSUER = "Pokemon-servelet-api"
+
+  ```
+
+- Crie o banco de dados e as tabelas (de acordo com o arquivo `models/auth/User.java`)
 
 # 📕 Endpoints
 
